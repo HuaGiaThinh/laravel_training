@@ -18,7 +18,7 @@ class CategoryController extends Controller
 
     public function index(Request $request)
     {   
-        $item = $this->model::with('posts')->find($request->category_id);  
+        $item = $this->model::with('posts')->find($request->id);  
 
         if(empty($item))  return redirect()->route('home');
         return view($this->pathViewController . 'index', compact('item'));

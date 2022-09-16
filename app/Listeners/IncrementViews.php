@@ -27,10 +27,6 @@ class IncrementViews
      */
     public function handle(ViewPostDetail $event)
     {
-        // $post = $event->post;
-        // $viewCount = $post->view_count;
-        // Post::where('id', $post->id)->update(['view_count' => ++$viewCount]);
-
         $event->post->increment('view_count');
     }
 }

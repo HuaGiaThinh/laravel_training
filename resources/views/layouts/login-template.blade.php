@@ -18,7 +18,7 @@
 
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="../../index2.html" class="h1"><b>Admin Login</b></a>
+                <span href="" class="h1"><b>Login</b></span>
             </div>
 
             {{-- content --}}

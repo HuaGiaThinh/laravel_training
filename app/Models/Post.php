@@ -9,7 +9,7 @@ use App\Helpers\Template;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class Post extends Model
 {
@@ -56,7 +56,7 @@ class Post extends Model
         }
         
         if ($options['task'] == 'fe-get-item') {
-            $result = self::with('category')->where('status', 'active')->find($params['post_id']);
+            $result = self::with('category')->where('status', 'active')->find($params['id']);
         }
         return $result;
     }

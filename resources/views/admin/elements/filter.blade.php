@@ -21,12 +21,15 @@ $filterStatus = Template::showButtonFilter($routeName, $itemsStatusCount, $param
                     {!! $filterStatus !!}
                 </div>
                 <div class="area-filter-attribute mb-2">
-                    @include('admin.elements.filter-select')
+                    @isset($filterBy)
+                        @include('admin.elements.filter-select')
+                    @endisset      
                 </div>
                 <div class="area-search mb-2">
                     <form action="" method="GET" name="search-form">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="search" placeholder="Enter search keyword..." aria-label="Enter search keyword" value="">
+                            <input type="text" class="form-control" name="search"
+                                placeholder="Enter search keyword..." aria-label="Enter search keyword" value="">
 
                             <span class="input-group-append">
                                 <button type="submit" class="btn btn-info">Search</button>

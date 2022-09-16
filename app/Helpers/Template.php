@@ -135,4 +135,11 @@ class Template
         $dataURL = route("$routeName.changeVoucherQuantity", ['quantity' => 'value_new', 'id' => $item['id']]);
         return sprintf('<input type="number" value="%s" data-url="%s" class="form-control text-center ajax-voucher-quantity">', $item['voucher_quantity'], $dataURL);
     }
+
+    public static function showEmailStatus($status)
+    {
+        $color = config('myConfig.template.email_status');
+
+        return sprintf('<span class="btn %s btn-sm" style="width: 76px"><b>%s</b></span>', $color[$status], $status);
+    }
 }

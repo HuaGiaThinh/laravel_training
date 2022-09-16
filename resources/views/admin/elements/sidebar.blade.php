@@ -1,8 +1,8 @@
 <aside class="main-sidebar sidebar-dark-info elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-        <img src="{{ asset('admin/images/logo.png') }}" alt="AdminLTE Logo"
-            class="brand-image img-circle elevation-3" style="opacity: 0.8" />
+        <img src="{{ asset('admin/images/logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+            style="opacity: 0.8" />
         <span class="brand-text font-weight-light">Admin Control Panel</span>
     </a>
 
@@ -11,87 +11,61 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('admin/images/avatar-cat.jpg') }}" class="img-circle elevation-2"
-                    alt="User Image" />
+                <img src="{{ asset('admin/images/avatar-cat.jpg') }}" class="img-circle elevation-2" alt="User Image" />
             </div>
             <div class="info">
-                <a href="#"
-                    class="d-block">GiaThinhDev</a>
+                <a href="#" class="d-block">GiaThinhDev</a>
             </div>
         </div>
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview"
-                role="menu" data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu"
+                data-accordion="false">
+                @php
+                    $arrNavigations = config('myConfig.template.sidebar');
+                @endphp
 
-                <li class="nav-item mb-1">
-                    <a href="#" class="nav-link user">
-                        <i class="nav-icon fas fa-user"></i>
-                        <p>Users<i class="right fas fa-angle-left"></i></p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('users') }}"
-                                class="nav-link user-index">
-                                <i class="fas fa-list-ul nav-icon"></i>
-                                <p>List</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('users.form') }}"
-                                class="nav-link user-form">
-                                <i class="fas fa-edit nav-icon"></i>
-                                <p>Form</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item mb-1">
-                    <a href="#" class="nav-link category">
-                        <i class="nav-icon fa fa-stream"></i>
-                        <p>Categories<i class="right fas fa-angle-left"></i></p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('categories') }}"
-                                class="nav-link category-index">
-                                <i class="fas fa-list-ul nav-icon"></i>
-                                <p>List</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('categories.form') }}"
-                                class="nav-link category-form">
-                                <i class="fas fa-edit nav-icon"></i>
-                                <p>Form</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item mb-1">
-                    <a href="#" class="nav-link book">
-                        <i class="nav-icon fas fa-shopping-bag"></i>
-                        <p>Posts<i class="right fas fa-angle-left"></i></p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('posts') }}"
-                                class="nav-link book-index">
-                                <i class="fas fa-list-ul nav-icon"></i>
-                                <p>List</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('posts.form') }}"
-                                class="nav-link book-form">
-                                <i class="fas fa-edit nav-icon"></i>
-                                <p>Form</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                @foreach ($arrNavigations as $nav)
+                    <li class="nav-item mb-1">
+                        <a href="#" class="nav-link {{ $nav['class'] }}">
+                            <i class="nav-icon {{ $nav['icon'] }}"></i>
+                            <p>{{ ucfirst($nav['name']) }}<i class="right fas fa-angle-left"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route($nav['name']) }}" class="nav-link">
+                                    <i class="fas fa-list-ul nav-icon"></i>
+                                    <p>List</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route($nav['name'] . '.form') }}" class="nav-link">
+                                    <i class="fas fa-edit nav-icon"></i>
+                                    <p>Form</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endforeach
             </ul>
         </nav>
     </div>
 </aside>
+
+@push('script-sidebar')
+    <script>
+        let arr = window.location.pathname.split('/');
+        arr.shift()
+
+        let navCurrent = $('.nav-link.' + arr[1]);
+        navCurrent.parent().addClass('menu-is-opening menu-open');
+        navCurrent.addClass('active');
+
+        if (arr.includes('form')) {
+            navCurrent.siblings('ul').children().last().children().addClass('active');
+        } else {
+            navCurrent.siblings('ul').children().first().children().addClass('active');
+        }
+    </script>
+@endpush

@@ -30,9 +30,9 @@ Route::group(['prefix' => $prefixNews], function () {
     $prefix         = 'post';
     $controller     = PostController::class;
     Route::group(['prefix' =>  $prefix], function () use ($controller) {
-        Route::get('/{post_name}.{post_id}', [$controller, 'index'])
-            ->where('post_name', '[0-9a-zA-z_-]+')
-            ->where('post_id', '[0-9]+')
+        Route::get('/{name}.{id}', [$controller, 'index'])
+            ->where('name', '[0-9a-zA-z_-]+')
+            ->where('id', '[0-9]+')
             ->name('posts.index');
         Route::get('generate-voucher-code/{id}', [$controller, 'generateVoucherCode'])->middleware('auth')->name('posts.generateVoucherCode');
     }); 
@@ -41,9 +41,9 @@ Route::group(['prefix' => $prefixNews], function () {
     $prefix         = 'category';
     $controller     = CategoryController::class;
     Route::group(['prefix' =>  $prefix], function () use ($controller) {
-        Route::get('/{category_name}.{category_id}', [$controller, 'index'])
-            ->where('category_name', '[0-9a-zA-z_-]+')
-            ->where('category_id', '[0-9]+')
+        Route::get('/{name}.{id}', [$controller, 'index'])
+            ->where('name', '[0-9a-zA-z_-]+')
+            ->where('id', '[0-9]+')
             ->name('categories.index');
     }); 
 });

@@ -8,7 +8,7 @@
                         <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                         <li><a href="#"><i class="fa fa-stack-overflow" aria-hidden="true"></i></a></li>
                         <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                        <li><a href="https://github.com/HuaGiaThinh"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+                        <li><a href="https://github.com/HuaGiaThinh" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a></li>
                         <li><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
                     </ul>
                 </div>

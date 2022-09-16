@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Post as MainModel;
 use Illuminate\Http\Request;
 use App\Events\viewPostDetail;
+use App\Models\Voucher;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    private $pathViewController = 'frontend.pages.post.'; 
+    private $pathViewController = 'frontend.pages.post.';
 
     public function __construct()
     {
@@ -20,11 +22,11 @@ class PostController extends Controller
 
     public function index(Request $request)
     {
-        $params['post_id'] = $request->post_id;
+        $params['id'] = $request->id;
         $itemPost = $this->model->getItem($params, ['task' => 'fe-get-item']);
-        
-        if(empty($itemPost))  return redirect()->route('home');
-        
+
+        if (empty($itemPost))  return redirect()->route('home');
+
         // event
         viewPostDetail::dispatch($itemPost);
 
@@ -36,19 +38,34 @@ class PostController extends Controller
         DB::beginTransaction();
         try {
             $post = $this->model::findOrFail($request->id);
-            if ($post->voucher_enabled && $post->voucher_quantity > 0) {
-                $post->voucher_quantity--;
-                $post->save();
+            $hasVoucher = $this->checkHasVoucher($post->id);
 
+            if (!empty($hasVoucher)) return response()->json(['type' => 'old_code', 'data' => $hasVoucher->code]);
+
+            if ($post->voucher_enabled && $post->voucher_quantity > 0) {
+                    $post->voucher_quantity--;
+                    $post->save();
+
+                    $voucherCode = Str::random(20);
+
+                    Voucher::create([
+                        'code'      => $voucherCode,
+                        'post_id'   => $post->id,
+                        'user_id'   => Auth::id(),
+                    ]);
                 DB::commit();
-                return Str::random(20);
+                return response()->json(['type' => 'new_code', 'data' => $voucherCode]);
             }
 
-            return 'There is no more available voucher';
+            return response()->json(['type' => 'error', 'data' => 'There is no more available voucher']);
         } catch (\Exception $e) {
             DB::rollBack();
-            return 'Something went wrong!!! Please, try again';
-        }   
+            return response()->json(['type' => 'error', 'data' => 'Something went wrong!!! Please, try again']);
+        }
+    }
+
+    public function checkHasVoucher($postID)
+    {
+        return Voucher::where('post_id', $postID)->where('user_id', Auth::id())->first();
     }
 }
-?>

@@ -28,6 +28,18 @@ return [
             'delete'    => ['class' => 'btn-danger btn-delete', 'title' => 'Delete', 'icon' => 'fa-trash', 'route-name' => '.delete'],
             'info'      => ['class' => 'btn-success', 'title' => 'View', 'icon' => 'fa-eye', 'route-name' => '.info'],
         ],
+        'email_status' => [
+            'PENDING'       => 'btn-warning',
+            'SENDING'       => 'btn-info',
+            'DONE'          => 'btn-success',
+            'ERROR'         => 'btn-danger',
+        ],
+        'sidebar'   => [
+            ['name' => 'users', 'icon' => 'fas fa-user', 'class' => 'users'],
+            ['name' => 'categories', 'icon' => 'fa fa-stream', 'class' => 'categories'],
+            ['name' => 'posts', 'icon' => 'fas fa-shopping-bag', 'class' => 'posts'],
+            ['name' => 'emails', 'icon' => 'fa fa-mail-bulk', 'class' => 'emails'],
+        ],
     ],
     'filters' => [
         'level'         => ['admin' => 'Admin', 'user' => 'User'],
@@ -45,15 +57,16 @@ return [
         ],
         'button' => [
             'default'       => ['edit', 'delete'],
-            'category'    => ['edit', 'delete'],
-            'post'         => ['edit', 'delete'],
-            'user'         => ['edit', 'delete'],
+            'category'      => ['edit', 'delete'],
+            'post'          => ['edit', 'delete'],
+            'user'          => ['edit', 'delete'],
         ]
     ],
     'notify' => [
         'add'       => 'Thêm mới phần tử thành công!',
         'edit'      => 'Chỉnh sửa phần tử thành công',
         'delete'    => 'Xoá phần tử thành công',
+        'sendMailQueue' => 'Bạn đã yêu cầu gửi mail thành công',
         'status'    => 'Status changed successfully',
         'category'  => 'Category changed successfully',
         'voucherEnabled'    => 'Voucher enable changed successfully',

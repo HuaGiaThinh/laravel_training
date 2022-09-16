@@ -22,14 +22,23 @@ $(document).ready(function () {
         e.preventDefault();
         const url = $(this).attr("href");
         let parent = $(this).parent();
-        const modal = $('#modal-voucher');
+        const modal = $("#modal-voucher");
 
         $.ajax({
             type: "GET",
             url: url,
-            // dataType: "json",
+            dataType: 'json',
             success: function (response) {
-                modal.find('.modal-body h3').html(response)
+                console.log(response);
+
+                if (response.type == 'old_code') {
+                    modal.find(".modal-body").html(
+                        '<h4>Bạn có voucher chưa sử dụng: </h4>'
+                        + '<h3 style="color:red">' + response.data + '</h3>'
+                    );
+                } else {
+                    modal.find(".modal-body h3").html(response.data);
+                }
             },
         });
     });

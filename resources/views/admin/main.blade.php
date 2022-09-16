@@ -5,7 +5,7 @@
     @include('admin.elements.head')
 </head>
 
-<body class="hold-transition sidebar-mini sidebar-collapse"> 
+<body class="hold-transition sidebar-mini"> 
     <div class="wrapper">
         <!-- Navbar -->
         @include('admin.elements.navbar')
