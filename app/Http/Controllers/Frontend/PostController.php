@@ -43,29 +43,34 @@ class PostController extends Controller
             if (!empty($hasVoucher)) return response()->json(['type' => 'old_code', 'data' => $hasVoucher->code]);
 
             if ($post->voucher_enabled && $post->voucher_quantity > 0) {
-                    $post->voucher_quantity--;
-                    $post->save();
+                $post->voucher_quantity--;
+                $post->save();
 
-                    $voucherCode = Str::random(20);
+                $voucherCode = Str::random(20);
+                $this->insertVoucherCode($voucherCode, $post->id);
 
-                    Voucher::create([
-                        'code'      => $voucherCode,
-                        'post_id'   => $post->id,
-                        'user_id'   => Auth::id(),
-                    ]);
                 DB::commit();
                 return response()->json(['type' => 'new_code', 'data' => $voucherCode]);
             }
 
-            return response()->json(['type' => 'error', 'data' => 'There is no more available voucher']);
+            return response()->json(['type' => 'error', 'data' => config('myConfig.notify_FE.voucher.not-available')]);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['type' => 'error', 'data' => 'Something went wrong!!! Please, try again']);
+            return response()->json(['type' => 'error', 'data' => config('myConfig.notify_FE.error')]);
         }
     }
 
     public function checkHasVoucher($postID)
     {
         return Voucher::where('post_id', $postID)->where('user_id', Auth::id())->first();
+    }
+
+    public function insertVoucherCode($voucherCode, $postID)
+    {
+        Voucher::create([
+            'code'      => $voucherCode,
+            'post_id'   => $postID,
+            'user_id'   => Auth::id(),
+        ]);
     }
 }

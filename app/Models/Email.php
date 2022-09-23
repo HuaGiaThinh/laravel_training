@@ -48,7 +48,6 @@ class Email extends Model
     public function saveItem($params, $options = null)
     {
         if ($options['task'] == 'add-item') {
-            // self::create($params);
             self::create($this->prepareParams($params));
         }
 

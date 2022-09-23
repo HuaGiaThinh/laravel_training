@@ -15,3 +15,4 @@
 {{-- my custom js --}}
 <script src="{{ asset('admin/js/my-custom.js') }}"></script>
 @stack('script-sidebar')
+@stack('script')

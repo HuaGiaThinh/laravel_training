@@ -9,8 +9,8 @@ class CheckLogin
 {
     public function handle($request, Closure $next)
     {
-        if (Auth::check())  return redirect()->route('home');
-        // if (Auth::check())  return redirect()->intended('home');
+        if (Auth::check())  return redirect()->back();
+        // if (Auth::check())  return redirect()->route('home');
  
         return $next($request);
     }

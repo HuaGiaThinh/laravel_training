@@ -6,14 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Jobs\HandleEmails;
 use Illuminate\Http\Request;
 use App\Http\Requests\EmailRequest as MainRequest;
-use Illuminate\Support\Facades\DB;
 use App\Models\Email as MainModel;
-
+use App\Models\Email;
 class EmailController extends Controller
 {
     public function __construct()
     {
-        $this->pathView = 'admin.pages.email.';
+        $this->pathView         = 'admin.pages.email.';
         $this->controllerName   = 'email';
         $this->routeName        = 'emails';
         $this->model            = new MainModel();
@@ -66,10 +65,10 @@ class EmailController extends Controller
 
     public function handleEmail()
     {
-        $emails = DB::table('emails')->where('status', 'PENDING')->get();
+        $emails = Email::where('status', 'PENDING')->get();
         
         $emails->each(function ($email) {
-            DB::table('emails')->where('id', $email->id)->update(['status' => 'SENDING']);
+            Email::where('id', $email->id)->update(['status' => 'SENDING']);
         });
         
         HandleEmails::dispatch($emails);

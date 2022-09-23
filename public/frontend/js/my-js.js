@@ -21,7 +21,6 @@ $(document).ready(function () {
     $(".ajax-generate-voucher-code").click(function (e) {
         e.preventDefault();
         const url = $(this).attr("href");
-        let parent = $(this).parent();
         const modal = $("#modal-voucher");
 
         $.ajax({
@@ -29,7 +28,6 @@ $(document).ready(function () {
             url: url,
             dataType: 'json',
             success: function (response) {
-                console.log(response);
 
                 if (response.type == 'old_code') {
                     modal.find(".modal-body").html(

@@ -36,7 +36,7 @@ function renderCategories($categories, &$xhtmlCategory)
                     <div class="header_content d-flex flex-row align-items-center justfy-content-start">
                         <div class="logo_container mt-0">
                             <a href="{{ route('home') }}">
-                                <div class="logo">Đây là logo</div>
+                                <div class="logo">Logo here</div>
                             </a>
                         </div>
 

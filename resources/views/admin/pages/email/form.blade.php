@@ -29,11 +29,11 @@ $elements = [
                         'id' => 'main-form-info',
                     ]) }}
                     {!! FormTemplate::show($elements) !!}
-                    
+
                     {{ Form::hidden('id', @$item->id) }}
                     <input class="mt-2 btn btn-success" type="submit" value="Save">
                     <a href="{{ route($routeName) }}" class="mt-2 btn btn-danger">Cancel</a>
-                    
+
                     {{ Form::close() }}
                 </div>
             </div>

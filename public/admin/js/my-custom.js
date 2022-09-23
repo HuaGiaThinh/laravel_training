@@ -1,8 +1,7 @@
 $(document).ready(function () {
-
-    $('.filter-element').change(function (e) { 
+    $(".filter-element").change(function (e) {
         e.preventDefault();
-        $('#filter-form').submit();
+        $("#filter-form").submit();
     });
 
     // delete button
@@ -42,32 +41,28 @@ $(document).ready(function () {
             data: "data",
             dataType: "json",
             success: function (response) {
-                if (response.type == 'success') {
+                if (response.type == "success") {
                     parent.html(response.data.original);
-                    parent
-                        .find("a.btn-ajax-status")
-                        .notify(response.message, {
-                            className: response.type,
-                            position: "top-center",
-                        });
+                    parent.find("a.btn-ajax-status").notify(response.message, {
+                        className: response.type,
+                        position: "top-center",
+                    });
                 } else {
-                    parent.find("a.btn-ajax-status")
-                        .notify(response.message, {
-                            className: response.type,
-                            position: "top-center",
-                        });
+                    parent.find("a.btn-ajax-status").notify(response.message, {
+                        className: response.type,
+                        position: "top-center",
+                    });
                 }
-                
             },
         });
     });
 
     // change voucher quantity input
-    $('.ajax-voucher-quantity').change(function (e) { 
+    $(".ajax-voucher-quantity").change(function (e) {
         e.preventDefault();
 
-        let url     = $(this).data('url');
-        let value   = $(this).val();
+        let url = $(this).data("url");
+        let value = $(this).val();
 
         url = url.replace("value_new", value);
 
@@ -78,7 +73,8 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 console.log(response);
-                parent.find("input.ajax-voucher-quantity")
+                parent
+                    .find("input.ajax-voucher-quantity")
                     .notify(response.message, {
                         className: response.type,
                         position: "top-center",
@@ -103,7 +99,8 @@ $(document).ready(function () {
             url: url,
             dataType: "json",
             success: function (response) {
-                parent.find("select.changeSelectBox-ajax")
+                parent
+                    .find("select.changeSelectBox-ajax")
                     .notify(response.message, {
                         className: response.type,
                         position: "top-center",

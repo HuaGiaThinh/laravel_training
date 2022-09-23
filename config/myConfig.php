@@ -72,6 +72,12 @@ return [
         'voucherEnabled'    => 'Voucher enable changed successfully',
         'voucherQuantity'   => 'Voucher quantity changed successfully',
         'ajaxError' => 'Something went wrong!!!',
+    ],
+    'notify_FE' => [
+        'voucher' => [
+            'not-available' => 'There is no more available voucher',
+        ],
+        'error' => 'Something went wrong! Please, try again',
     ]
 
 

@@ -10,8 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\DB;
-
+use App\Models\Email;
 class HandleEmails implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -40,9 +39,9 @@ class HandleEmails implements ShouldQueue
             try {
                 Mail::to($email->email)->send(new SendMailQueue()); 
 
-                DB::table('emails')->where('id', $email->id)->update(['status' => 'DONE']);
+                Email::where('id', $email->id)->update(['status' => 'DONE']);
             } catch (\Throwable $th) {
-                DB::table('emails')->where('id', $email->id)->update(['status' => 'ERROR']);
+                Email::where('id', $email->id)->update(['status' => 'ERROR']);
             }  
         });    
     }
