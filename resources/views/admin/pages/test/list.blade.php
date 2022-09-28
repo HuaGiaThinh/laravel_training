@@ -58,7 +58,7 @@ use App\Helpers\Template as Template;
                 let id = $(this).parent().siblings('td.item-id').html();
 
                 $.ajax({
-                    type: "GET",
+                    type: "POST",
                     contentType: "application/json",
                     url: api,
                     data: "data",
@@ -77,7 +77,7 @@ use App\Helpers\Template as Template;
 
         function maintain(url, id) {
             $.ajax({
-                type: "GET",
+                type: "POST",
                 url: $('input[name=api-maintain-' + id + ']').val(),
                 dataType: "json",
                 success: function() {

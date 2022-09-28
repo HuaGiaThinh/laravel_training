@@ -73,9 +73,8 @@ class EventController extends Controller
     public function editable(Request $request, Event $event)
     {
         if ($event->editable == 1) {
-            $userEditing = User::where('api_token', $request->api_token)->first()->id;
             $event->editable = 0;
-            $event->user_is_editing = $userEditing;
+            $event->user_is_editing = Auth::id();
             $event->save();
             return response()->json('Success', 200);
         }
@@ -95,17 +94,23 @@ class EventController extends Controller
         $event->user_is_editing = null;
         $event->time_edit = null;
         $event->save();
+        return response()->json('Release Success', 200);
     }
 
     public function maintain(Request $request, Event $event)
     {
-        if (($event->time_edit != null) && time() - $event->time_edit > 30) {
-            $event->editable = 0;
+        if ($event->time_edit == null) {
+            $event->time_edit = time();
             $event->save();
-            return response()->json('Success', 200);
+            return response()->json('Error Maintain', 409);
         } else {
-            return response()->json('Error maintain', 409);
-
+            if (time() - $event->time_edit > 10) {
+                $event->time_edit = time();
+                $event->user_is_editing = Auth::id();
+                $event->editable = 0;
+                $event->save();
+                return response()->json('Success Maintain', 200);
+            }  
         }
     }
-} 
+}

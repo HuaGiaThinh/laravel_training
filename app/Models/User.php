@@ -10,11 +10,14 @@ use App\Helpers\Template;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str; 
-
-class User extends Authenticatable
+use Tymon\JWTAuth\Contracts\JWTSubject;
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
-    public $table = 'users';
+
+    protected $table = 'users';
+    protected $crudNotAccepted = ['_token'];
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -42,9 +45,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function __construct()
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
     {
-        $this->crudNotAccepted = ['_token'];
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 
     public function listItems($params = null, $options = null)

@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,11 +22,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Event api
 Route::apiResource('events', EventController::class)->middleware('auth:api');
 
-Route::get('events/{event}/editable', [EventController::class, 'editable'])->middleware('auth:api');
-Route::get('events/{event}/editable/release', [EventController::class, 'release']);
-Route::get('events/{event}/editable/maintain', [EventController::class, 'maintain']);
+Route::post('events/{event}/editable', [EventController::class, 'editable'])->middleware('auth:api');
+Route::post('events/{event}/editable/release', [EventController::class, 'release']);
+Route::post('events/{event}/editable/maintain', [EventController::class, 'maintain']);
 
 
-// Route::group(['prefix' => 'events', 'middleware' => ['auth:api']], function () {
-//     Route::get('/{event}/editable', [EventController::class, 'editable'])->name('event.editable');
-// });
+// login api
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::post('me', [AuthController::class, 'me']);
+});
