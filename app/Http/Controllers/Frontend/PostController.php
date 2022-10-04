@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post as MainModel;
 use Illuminate\Http\Request;
 use App\Events\viewPostDetail;
+use App\Models\Post;
 use App\Models\Voucher;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -37,13 +38,15 @@ class PostController extends Controller
     {
         DB::beginTransaction();
         try {
-            $post = $this->model::findOrFail($request->id);
-            $hasVoucher = $this->checkHasVoucher($post->id);
+            // Get post info and lock it during updating.
+            $post = Post::where('id', $request->id)->lockForUpdate()->first(); 
 
+            // Return the old voucher code if this user already has a voucher in this post.
+            $hasVoucher = $this->checkHasVoucher($post->id);
             if (!empty($hasVoucher)) return response()->json(['type' => 'old_code', 'data' => $hasVoucher->code]);
 
             if ($post->voucher_enabled && $post->voucher_quantity > 0) {
-                $post->voucher_quantity--;
+                $post->decrement('voucher_quantity');
                 $post->save();
 
                 $voucherCode = Str::random(20);
@@ -60,12 +63,12 @@ class PostController extends Controller
         }
     }
 
-    public function checkHasVoucher($postID)
+    protected function checkHasVoucher($postID)
     {
         return Voucher::where('post_id', $postID)->where('user_id', Auth::id())->first();
     }
 
-    public function insertVoucherCode($voucherCode, $postID)
+    protected function insertVoucherCode($voucherCode, $postID)
     {
         Voucher::create([
             'code'      => $voucherCode,

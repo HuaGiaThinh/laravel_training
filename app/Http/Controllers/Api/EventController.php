@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
 {
@@ -69,17 +70,30 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Event
      * @return \Illuminate\Http\Response
+     * 
+     * api: http://laravel_base.test/api/events/{event}/editable
      */
     public function editable(Request $request, Event $event)
     {
-        if ($event->editable == 1) {
-            $event->editable = 0;
-            $event->user_is_editing = Auth::id();
-            $event->save();
-            return response()->json('Success', 200);
-        }
+        DB::beginTransaction();
+        try {
+            // Get event and lock it during updating.
+            $event = Event::where('id', $event->id)->lockForUpdate()->first();
 
-        return response()->json('Error', 409);
+            if ($event->editable == 1) {
+                $event->editable = 0;
+                $event->time_edit = time();
+                $event->user_is_editing = Auth::id();
+                $event->save();
+
+                DB::commit();
+                return response()->json('Allowed edit', 200);
+            }
+            return response()->json('Not allowed edit', 409);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json('Error', 500);
+        }
     }
 
     /**
@@ -87,6 +101,8 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Event
      * @return \Illuminate\Http\Response
+     * 
+     * api: http://laravel_base.test/api/events/{event}/editable/release
      */
     public function release(Request $request, Event $event)
     {
@@ -97,20 +113,15 @@ class EventController extends Controller
         return response()->json('Release Success', 200);
     }
 
+    // api: http://laravel_base.test/api/events/{event}/editable/maintain
     public function maintain(Request $request, Event $event)
     {
-        if ($event->time_edit == null) {
-            $event->time_edit = time();
+        if (time() - $event->time_edit > 300) {  // timeout 5 minutes
+            $event->time_edit = Null;
+            $event->editable = 1;
             $event->save();
-            return response()->json('Error Maintain', 409);
-        } else {
-            if (time() - $event->time_edit > 10) {
-                $event->time_edit = time();
-                $event->user_is_editing = Auth::id();
-                $event->editable = 0;
-                $event->save();
-                return response()->json('Success Maintain', 200);
-            }  
+            return response()->json('Success Maintain', 200);
         }
+        return response()->json('Error Maintain', 409);
     }
 }
