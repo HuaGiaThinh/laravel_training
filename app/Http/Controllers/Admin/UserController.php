@@ -21,7 +21,7 @@ class UserController extends Controller
         $this->controllerName   = 'user';
         $this->routeName        = 'users';
         $this->model            = new MainModel();
-        $this->params['pagination']['totalItemsPerPage'] = 3;
+        $this->params['pagination']['totalItemsPerPage'] = 5;
         view()->share('controllerName', $this->controllerName);
         view()->share('routeName', $this->routeName);
     }
