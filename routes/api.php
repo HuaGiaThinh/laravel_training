@@ -38,3 +38,8 @@ Route::group([
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
 });
+
+// test 
+Route::get('test-request', function () {
+    return view('tests.testRequest');
+});
