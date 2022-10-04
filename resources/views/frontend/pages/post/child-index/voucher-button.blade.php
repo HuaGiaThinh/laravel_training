@@ -26,7 +26,10 @@
                 </button>
             </div>
             <div class="modal-body text-center" style="background-color:rgb(255, 255, 90);">
-                <h3 style="color:red;">Your voucher code here</h3>
+                <h3 class="loading" style="color:red">
+                    <img src="{{ asset('frontend/images/spinner.gif') }}">
+                    <span style="color:#6c757d">Loading...</span>
+                </h3>     
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
