@@ -109,7 +109,6 @@ class User extends Authenticatable implements JWTSubject
     {
         if ($options['task'] == 'add-item') {
             $params['password']     = Hash::make($params['password']);
-            $params['api_token']    = Str::random(60);
             $params['created_at']   = now();
             self::insert($this->prepareParams($params));
         }
@@ -127,8 +126,6 @@ class User extends Authenticatable implements JWTSubject
             return Template::showItemStatus($params, $this->table);
         }
     }
-
-    // note: $this->prepareParams($params) có thể nên tạo scope
 
     public function prepareParams($params)
     {
