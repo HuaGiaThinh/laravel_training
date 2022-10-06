@@ -116,7 +116,7 @@ class EventController extends Controller
     // api: http://laravel_base.test/api/events/{event}/editable/maintain
     public function maintain(Request $request, Event $event)
     {
-        if (time() - $event->time_edit > 300) {  // timeout 5 minutes
+        if ($event->editable == 0 && (time() - $event->time_edit > 300)) {  // timeout 5 minutes
             $event->time_edit = Null;
             $event->editable = 1;
             $event->save();
