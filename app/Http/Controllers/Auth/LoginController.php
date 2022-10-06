@@ -20,7 +20,6 @@ class LoginController extends Controller
             'password'  => 'required|string|max:60',
         ]);
 
-        // $credentials = $request->only('email', 'password');
         $credentials = ['email' => $request->email, 'password' => $request->password, 'status' => 'active'];
 
         if (Auth::attempt($credentials)) { 

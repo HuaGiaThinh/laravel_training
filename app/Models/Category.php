@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Helpers\Template;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Kalnoy\Nestedset\NodeTrait;
 
 class Category extends Model
@@ -117,8 +117,6 @@ class Category extends Model
             $node->delete();
         }
     }
-
-    // note: $this->prepareParams($params) có thể nên tạo scope
 
     public function prepareParams($params)
     {

@@ -84,10 +84,10 @@ class Post extends Model
 
         if ($options['task'] == 'edit-item') {
             if (!empty($params['thumb'])) {
-                // Xóa hình cũ
+                // Delete old thumbnail
                 $this->deleteThumb($params['thumb_current']);
 
-                // Up hình mới
+                // Upload new thumbnail
                 $params['thumb'] = $this->uploadThumb($params['thumb']);
             }
 
@@ -124,7 +124,6 @@ class Post extends Model
             self::where('id', $params['id'])->update($this->prepareParams($params));
         }
     }
-    // note: $this->prepareParams($params) có thể nên tạo scope
 
     public function prepareParams($params)
     {

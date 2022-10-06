@@ -39,7 +39,7 @@ Route::group([
     Route::post('me', [AuthController::class, 'me']);
 });
 
-// test 
+// test request
 Route::get('test-request', function () {
     return view('tests.testRequest');
 });

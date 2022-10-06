@@ -15,7 +15,7 @@ class PostController extends Controller
 
     public function __construct()
     {
-        $this->pathView         = 'admin.pages.post';
+        $this->pathView         = 'admin.pages.post.';
         $this->controllerName   = 'post';
         $this->routeName        = 'posts';
         $this->model            = new MainModel();
@@ -34,7 +34,7 @@ class PostController extends Controller
         $categories = $this->getCategories();
         $params = $this->params;
 
-        return view($this->pathView . '/index', compact('items', 'itemsStatusCount', 'params', 'categories'));
+        return view($this->pathView . 'index', compact('items', 'itemsStatusCount', 'params', 'categories'));
     }
 
     public function form(Request $request)
@@ -48,7 +48,7 @@ class PostController extends Controller
         // get list categories
         $categories = $this->getCategories();
 
-        return view($this->pathView . '/form', compact('item', 'categories'));
+        return view($this->pathView . 'form', compact('item', 'categories'));
     }
 
     public function save(MainRequest $request)

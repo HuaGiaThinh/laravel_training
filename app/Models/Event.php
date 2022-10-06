@@ -12,13 +12,11 @@ use Illuminate\Support\Facades\DB;
 class Event extends Model
 {
     use HasFactory;
-    // public $table = 'events';
 
     protected $crudNotAccepted  = ['_token', 'thumb_current'];
 
     public function listItems($params = null, $options = null)
     {
-
         $result = null;
         $query = self::select('id', 'name', 'user_is_editing', 'editable');
 
@@ -32,7 +30,7 @@ class Event extends Model
         if ($options['task'] == 'admin-get-item') {
             $result = self::find($params['id']);
         }
-        
+
         if ($options['task'] == 'fe-get-item') {
             $result = self::with('category')->where('status', 'active')->find($params['id']);
         }
@@ -93,7 +91,6 @@ class Event extends Model
             self::where('id', $params['id'])->update($this->prepareParams($params));
         }
     }
-    // note: $this->prepareParams($params) có thể nên tạo scope
 
     public function prepareParams($params)
     {

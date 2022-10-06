@@ -6,10 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User as MainModel;
 use App\Http\Requests\UserRequest as MainRequest;
-use Illuminate\Support\Facades\Config;
-
-
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -17,7 +13,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->pathView         = 'admin.pages.user';
+        $this->pathView         = 'admin.pages.user.';
         $this->controllerName   = 'user';
         $this->routeName        = 'users';
         $this->model            = new MainModel();
@@ -34,7 +30,7 @@ class UserController extends Controller
         $items = $this->model->listItems($this->params);
         $itemsStatusCount = $this->model->countItemsStatus($this->params);
         $params = $this->params;
-        return view($this->pathView . '/index', compact('items', 'itemsStatusCount', 'params'));
+        return view($this->pathView . 'index', compact('items', 'itemsStatusCount', 'params'));
     }
 
     public function form(Request $request)
@@ -45,7 +41,7 @@ class UserController extends Controller
             $item = $this->model->getItem($params); 
         }
 
-        return view($this->pathView . '/form', compact('item'));
+        return view($this->pathView . 'form', compact('item'));
     }
 
     public function save(MainRequest $request)

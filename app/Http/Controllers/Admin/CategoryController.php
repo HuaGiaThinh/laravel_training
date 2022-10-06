@@ -14,7 +14,7 @@ class CategoryController extends Controller
 
     public function __construct()
     {
-        $this->pathView         = 'admin.pages.category';
+        $this->pathView         = 'admin.pages.category.';
         $this->controllerName   = 'category';
         $this->routeName        = 'categories';
         $this->model            = new MainModel();
@@ -25,12 +25,9 @@ class CategoryController extends Controller
     
     public function index(Request $request)
     {
-        // $test = $this->model::find(6)->posts;
-        // dd($test->toArray());
-
         $items = $this->model->listItems($this->params, ['task' => 'admin-list-items']);
         $params = $this->params;
-        return view($this->pathView . '/index', compact('items', 'params'));
+        return view($this->pathView . 'index', compact('items', 'params'));
     }
 
     public function form(Request $request)
@@ -46,7 +43,7 @@ class CategoryController extends Controller
         $categories = $this->model->listItems($this->params, ['task' => 'admin-list-categories-in-selectbox']);
         $categories = $categories->pluck('name_with_depth', 'id'); // accessor
 
-        return view($this->pathView . '/form', compact('item', 'categories', 'itemParent'));
+        return view($this->pathView . 'form', compact('item', 'categories', 'itemParent'));
     }
 
     public function save(MainRequest $request)
