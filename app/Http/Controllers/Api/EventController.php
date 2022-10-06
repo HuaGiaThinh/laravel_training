@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -12,66 +11,85 @@ use Illuminate\Support\Facades\DB;
 class EventController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *      path="/api/events",
+     *      tags={"Events"},
+     *      description="Returns list of events",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       )
+     *     )
      */
     public function index(Request $request)
     {
         return Event::all();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
     }
 
     /**
-     * Display the specified resource.
-     * @param  \App\Models\Event
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *     path="/api/events/{event}",
+     *     description="Get a single event from the ID",
+     *     tags={"Events"},
+     *     @OA\Parameter(
+     *         description="Event ID",
+     *         in="path",
+     *         name="event",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Get event susscess"
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="unexpected error",
+     *     )
+     * )
      */
     public function show(Event $event)
     {
         return $event;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Event
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Event $event)
     {
-        //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Event 
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Event $event)
     {
-        //
     }
 
     /**
-     * Editable event
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Event
-     * @return \Illuminate\Http\Response
-     * 
-     * api: http://laravel_base.test/api/events/{event}/editable
+     * @OA\Post(
+     *     path="/api/events/{event}/editable",
+     *     description="Check if that event is still editable",
+     *     tags={"Events"},
+     *     @OA\Parameter(
+     *         description="Event ID",
+     *         in="path",
+     *         name="event",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Allowed edit event"
+     *     ),
+     *     @OA\Response(
+     *         response="409",
+     *         description="conflict",
+     *     )
+     * )
      */
     public function editable(Request $request, Event $event)
     {
@@ -97,12 +115,24 @@ class EventController extends Controller
     }
 
     /**
-     * Release event
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Event
-     * @return \Illuminate\Http\Response
-     * 
-     * api: http://laravel_base.test/api/events/{event}/editable/release
+     * @OA\Post(
+     *     path="/api/events/{event}/editable/release",
+     *     description="Release event",
+     *     tags={"Events"},
+     *     @OA\Parameter(
+     *         description="Event ID",
+     *         in="path",
+     *         name="event",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Release event successfully"
+     *     ),
+     * )
      */
     public function release(Request $request, Event $event)
     {
@@ -113,8 +143,31 @@ class EventController extends Controller
         return response()->json('Release Success', 200);
     }
 
-    // api: http://laravel_base.test/api/events/{event}/editable/maintain
-    public function maintain(Request $request, Event $event)
+    /**
+     * @OA\Post(
+     *     path="/api/events/{event}/editable/maintain",
+     *     description="Maintain event",
+     *     tags={"Events"},
+     *     @OA\Parameter(
+     *         description="Event ID",
+     *         in="path",
+     *         name="event",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Maintain success"
+     *     ),
+     *     @OA\Response(
+     *         response="409",
+     *         description="conflict",
+     *     )
+     * )
+     */
+    public function maintain(Event $event)
     {
         if ($event->editable == 0 && (time() - $event->time_edit > 300)) {  // timeout 5 minutes
             $event->time_edit = Null;
