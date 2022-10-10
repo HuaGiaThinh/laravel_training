@@ -23,8 +23,6 @@
                                     @include('admin/elements/bulk-action')
                                 </div>
                                 <div>
-                                    {{-- <a href="{{ route('emails.sendEmailQueues') }}"
-                                        class="btn btn-primary btn-send-mail-queue">Send All Mails</a> --}}
                                     <a href="{{ route('emails.sendEmailQueues') }}" class="btn bg-warning btn-send-mail-queue">
                                         <i class="fas fa-envelope"></i> Send All Mails
                                     </a>

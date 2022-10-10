@@ -23,7 +23,7 @@ $filterStatus = Template::showButtonFilter($routeName, $itemsStatusCount, $param
                 <div class="area-filter-attribute mb-2">
                     @isset($filterBy)
                         @include('admin.elements.filter-select')
-                    @endisset      
+                    @endisset
                 </div>
                 <div class="area-search mb-2">
                     <form action="" method="GET" name="search-form">
@@ -41,5 +41,4 @@ $filterStatus = Template::showButtonFilter($routeName, $itemsStatusCount, $param
             </div>
         </div>
     </div>
-    <!-- /.card-body -->
 </div>

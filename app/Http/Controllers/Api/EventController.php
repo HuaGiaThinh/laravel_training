@@ -46,7 +46,7 @@ class EventController extends Controller
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Get event susscess"
+     *         description="Get event success"
      *     ),
      *     @OA\Response(
      *         response="default",

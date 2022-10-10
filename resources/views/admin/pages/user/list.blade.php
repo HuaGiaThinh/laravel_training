@@ -27,7 +27,7 @@ use App\Helpers\Template as Template;
                             <p class="mb-0">Name: <b>{{ $item->name }}</b></p>
                             <p class="mb-0">Email: <b>{{ $item->email }}</b></p>
                         </td>
-                        <td class="position-relative">{{ $item->level }}</td>
+                        <td><b>{{ strtoupper($item->level) }}</b></td>
                         <td class="position-relative">
                             {!! Template::showItemStatus($item, $routeName) !!}
                         </td>

@@ -5,7 +5,6 @@ use App\Helpers\Template;
 
 $classInput = config('myConfig.template.classInput');
 $statusValue = ['active' => 'Active', 'inactive' => 'Inactive'];
-$levelValue = ['user' => 'User', 'admin' => 'Admin'];
 $selectVoucherEnabled = [0 => 'No', 1 => 'Yes'];
 
 $elements = [

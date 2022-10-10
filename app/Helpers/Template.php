@@ -140,6 +140,6 @@ class Template
     {
         $color = config('myConfig.template.email_status');
 
-        return sprintf('<span class="btn %s btn-sm" style="width: 76px"><b>%s</b></span>', $color[$status], $status);
+        return sprintf('<span class="btn %s btn-sm" style="width: 76px;cursor:default"><b>%s</b></span>', $color[$status], $status);
     }
 }

@@ -39,7 +39,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Get event susscess"
+                        "description": "Get event success"
                     },
                     "default": {
                         "description": "unexpected error"
