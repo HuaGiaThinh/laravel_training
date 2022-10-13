@@ -33,13 +33,15 @@
                         {{-- list --}}
                         @include ('admin.templates.notify')
                         @include('admin.pages.post.list')
-                    </form>     
+                    </form>
                 </div>
 
                 <div class="card-footer clearfix">
                     {{-- pagination --}}
                     @if (count($items) > 0)
-                        {{ $items->links('pagination.pagination_BE') }}
+                        @if (method_exists($items, 'links'))
+                            {{ $items->links('pagination.pagination_BE') }}
+                        @endif
                     @endif
                 </div>
             </div>

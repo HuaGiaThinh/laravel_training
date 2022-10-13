@@ -34,6 +34,10 @@ class PostController extends Controller
         $categories = $this->getCategories();
         $params = $this->params;
 
+        if ($params['filter']['category'] !== "default") {
+            $items = $this->model->filterByCategory($this->params);
+        }
+
         return view($this->pathView . 'index', compact('items', 'itemsStatusCount', 'params', 'categories'));
     }
 

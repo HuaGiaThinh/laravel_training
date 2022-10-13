@@ -15,37 +15,35 @@ class Post extends Model
 {
     use HasFactory, Notifiable;
     public $table = 'posts';
-
-    public function __construct()
-    {
-        $this->crudNotAccepted  = ['_token', 'thumb_current'];
-        $this->folderUpload     = 'posts';
-    }
+    protected $fillable = [
+        'name', 'description', 'thumb', 'status', 'voucher_enabled', 'voucher_quantity'
+    ];
+    protected $crudNotAccepted  = ['_token', 'thumb_current'];
+    protected $folderUpload     = 'posts';
 
     // Relationship
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class);
     }
-
 
     public function listItems($params = null, $options = null)
     {
-
         $result = null;
-        $query = self::select('id', 'name', 'description', 'status', 'category_id', 'thumb', 'voucher_enabled', 'voucher_quantity');
+        $query  = self::with('categories')->select('id', 'name', 'description', 'status', 'thumb', 'voucher_enabled', 'voucher_quantity');
 
         // filter by status
         if ($params['filter']['status'] !== "all") {
             $query->where('status', $params['filter']['status']);
         }
-        // filter by category
-        if ($params['filter']['category'] !== "default") {
-            $query->where('category_id', $params['filter']['category']);
-        }
 
         $result = $query->latest('id')->paginate($params['pagination']['totalItemsPerPage']);
         return $result;
+    }
+
+    public function filterByCategory($params)
+    {
+        return Category::with('posts')->find($params['filter']['category'])->posts;
     }
 
     public function getItem($params = null, $options = null)
@@ -54,9 +52,9 @@ class Post extends Model
         if ($options['task'] == 'admin-get-item') {
             $result = self::find($params['id']);
         }
-        
+
         if ($options['task'] == 'fe-get-item') {
-            $result = self::with('category')->where('status', 'active')->find($params['id']);
+            $result = self::with('categories')->where('status', 'active')->find($params['id']);
         }
         return $result;
     }
@@ -79,7 +77,12 @@ class Post extends Model
     {
         if ($options['task'] == 'add-item') {
             $params['thumb'] = $this->uploadThumb($params['thumb']);
-            self::insert($this->prepareParams($params));
+
+            $category_id = $params['category_id'];
+            unset($params['category_id']);
+
+            $post = self::create($this->prepareParams($params));
+            $post->categories()->attach($category_id);
         }
 
         if ($options['task'] == 'edit-item') {
@@ -90,8 +93,13 @@ class Post extends Model
                 // Upload new thumbnail
                 $params['thumb'] = $this->uploadThumb($params['thumb']);
             }
+            $category_id = $params['category_id'];
+            unset($params['category_id']);
 
             self::where('id', $params['id'])->update($this->prepareParams($params));
+
+            $post = self::find($params['id']);
+            $post->categories()->attach($category_id);
         }
     }
 

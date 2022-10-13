@@ -19,8 +19,8 @@
                                 @include('frontend.pages.post.child-index.post', [
                                     'item' => $itemPost,
                                     'lenghtContent' => 'full',
-                                    'showCategory' => true,
-                                    'category' => $itemPost->category,
+                                    'showCategory' => false,
+                                    'category' => $itemPost->categories->pluck('name', 'id'),
                                 ])
                             </div>
                         </div>

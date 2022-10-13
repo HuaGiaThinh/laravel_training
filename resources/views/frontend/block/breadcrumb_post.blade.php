@@ -1,10 +1,11 @@
 @php
 use App\Helpers\URL;
-$linkCategory = URL::linkCategory($item->category->id, $item->category->name);
+// $linkCategory = URL::linkCategory($item->category->id, $item->category->name);
+$linkCategory = '#';
 @endphp
 
 <div class="home">
-    <div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="{!! asset('frontend/images/footer.jpg') !!}"
+    <div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('frontend/images/footer.jpg') }}"
         data-speed="0.8"></div>
     <div class="home_content_container">
         <div class="container">
@@ -14,9 +15,9 @@ $linkCategory = URL::linkCategory($item->category->id, $item->category->name);
                         <div class="home_title">{!! $item->name !!}</div>
                         <div class="breadcrumbs">
                             <ul class="d-flex flex-row align-items-start justify-content-start">
-                                <li><a href="{!! route('home') !!}">Trang chủ</a></li>
-                                <li><a href="{!! $linkCategory !!}">{!! $item->category->name !!}</a></li>
-                                <li>{!! $item->name !!}</li>
+                                <li><a href="{{ route('home') }}">Trang chủ</a></li>
+                                {{-- <li><a href="{!! $linkCategory !!}">{!! $item->category->name !!}</a></li>
+                                <li>{!! $item->name !!}</li> --}}
                             </ul>
                         </div>
                     </div>
