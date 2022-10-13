@@ -12,9 +12,6 @@
                 <!-- Main Content -->
                 <div class="col-lg-9">
                     <div class="main_content">
-                        <!-- Featured -->
-                        {{-- @include('frontend.block.featured', ['items' => $itemsFeatured]) --}}
-
                         <!-- CATEGORY -->
                         @include('frontend.pages.home.child-index.category_list')
                     </div>
@@ -23,9 +20,6 @@
                 <!-- Sidebar -->
                 <div class="col-lg-3">
                     <div class="sidebar">
-                        <!-- Latest Posts -->
-                        {{-- @include ('frontend.block.latest_posts', ['items' => $itemsLatest]) --}}
-
                         <!-- Advertisement -->
                         @include ('frontend.block.advertisement', ['itemsAdvertisement' => []])
 

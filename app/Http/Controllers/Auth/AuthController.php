@@ -37,7 +37,7 @@ class AuthController extends Controller
      *                     property="password",
      *                     type="string"
      *                 ),
-     *                 example={"email": "admin@test", "password": 12345678}
+     *                 example={"email": "apiAuth@test", "password": 12345678}
      *             )
      *         )
      *     ),

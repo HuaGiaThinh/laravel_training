@@ -108,9 +108,8 @@ class User extends Authenticatable implements JWTSubject
     public function saveItem($params, $options = null)
     {
         if ($options['task'] == 'add-item') {
-            $params['password']     = Hash::make($params['password']);
-            $params['created_at']   = now();
-            self::insert($this->prepareParams($params));
+            $params['password'] = Hash::make($params['password']);
+            self::create($this->prepareParams($params));
         }
 
         if ($options['task'] == 'edit-item') {

@@ -148,7 +148,7 @@
                                 },
                                 "type": "object",
                                 "example": {
-                                    "email": "admin@test",
+                                    "email": "apiAuth@test",
                                     "password": 12345678
                                 }
                             }

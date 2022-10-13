@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\EmailController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\TestController;
 use App\Http\Controllers\Admin\UserController;
+use App\Models\Category;
+use App\Models\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,4 +83,8 @@ Route::group(['prefix' => $prefixAdmin, 'middleware' => ['auth', 'permission.adm
         Route::post('save', [$controller, 'save'])->name("$prefix.save");
         Route::get('delete/{id}', [$controller, 'delete'])->where('id', '[0-9]+')->name("$prefix.delete");
     });
+});
+
+Route::get('test', function () {
+    // return Category::with('posts')->get();
 });
