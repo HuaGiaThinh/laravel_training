@@ -18,6 +18,7 @@ class CreateEventsTable extends Migration
             $table->string('name');
             $table->tinyInteger('editable');
             $table->unsignedBigInteger('user_is_editing');
+            $table->string('time_edit')->nullable();
             $table->timestamps();
         });
     }

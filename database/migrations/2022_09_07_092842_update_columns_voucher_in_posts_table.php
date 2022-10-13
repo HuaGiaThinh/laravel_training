@@ -14,8 +14,8 @@ class UpdateColumnsVoucherInPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->tinyInteger('voucher_enabled')->default(0);
-            $table->integer('voucher_quantity')->default(0);
+            $table->tinyInteger('voucher_enabled')->nullable()->default(0);
+            $table->integer('voucher_quantity')->nullable()->default(0);
         });
     }
 

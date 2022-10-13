@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('level', 45)->default('user');
             $table->string('password');
             $table->rememberToken();
+            $table->timestamp('last_login')->nullable();
             $table->timestamps();
         });
     }
