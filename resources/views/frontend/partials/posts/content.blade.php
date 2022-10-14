@@ -36,7 +36,7 @@ if ($lengthTitle == 'full') {
             </div>
             <div class="post_author_name"><a href="#">GiaThinh</a></div>
         </div>
-        <div class="post_date"><a href="#">{{ $item->created_at }}</a></div>
+        <div class="post_date"><a href="#">{{ $item->created_at->format('d-m-Y') }}</a></div>
     </div>
 
     <div class="post_text mt-4">

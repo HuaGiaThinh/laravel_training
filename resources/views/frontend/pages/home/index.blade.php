@@ -4,6 +4,8 @@
 @endsection
 @section('content')
     @include ('frontend.block.slider')
+
+    @include('frontend.block.intro')
     <!-- Content Container -->
     <div class="content_container">
         <div class="container">

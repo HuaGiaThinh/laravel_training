@@ -3,9 +3,9 @@
     const userToken2 = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sYXJhdmVsX2Jhc2UudGVzdFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY2NTY1Mzc1MiwiZXhwIjoxNjY1NjU3MzUyLCJuYmYiOjE2NjU2NTM3NTIsImp0aSI6IjFsOWtCbjg2OXd0bGpZWkUiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.xZX6w2kDRymjgitUMGiapBZy_t6MXQ4z2Lo-bghloHM";
 
     /** API
-     * Editable:    http://laravel_base.test/api/events/{event}/editable
-     * Release:     http://laravel_base.test/api/events/{event}/editable/release
-     * Maintain:    http://laravel_base.test/api/events/{event}/editable/maintain
+     * Editable:    /api/events/{event}/editable
+     * Release:     /api/events/{event}/editable/release
+     * Maintain:    /api/events/{event}/editable/maintain
      **/
     Promise.all([
             fetch("http://laravel_base.test/api/events/1/editable", {
